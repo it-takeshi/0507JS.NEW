@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Health Check</title>
+  <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+  <h1 class="main_title">my-health-check</h1>
+
+  <div class="MyChartContent" style="position: relative; height:600px; width: 700px" >
+  <canvas id="myChart" ></canvas>
+  <canvas id="myChart2"></canvas>
+  <canvas id="myChart3"></canvas>
+  <canvas id="myRaderChart"></canvas>
+
+  <ul>
+    <li id="save">Save</li>
+    <li id="clear">Clear</li>
+    </ul>
+
+</div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script>
+    $('main').slideDown(500);
+    // JS表示部分
+// チャート1体重ここから
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    // 横軸
+    labels: ['06月29日','07月31日','08月25日','09月25日','10月28日','11月25日','01月04日','02月15日','03月12日','04月10日','05月08日'],
+    datasets: [
+      {
+        // タイトル
+        label: '体重記録',
+        lineTension: 0.1,
+        // 色周り
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        // 縦軸データ
+        data: [76.1,75.5,74.8,74.1,72.4,69.8,73.1,72.5,70.3,71.1,72.6],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      yAxes: [{
+          ticks: {
+            // 最小値
+            min: 69.5,
+            // 縦軸に単位
+            userCallback: function(tick) {
+              return tick.toString() + 'kg';
+            }
+          },
+          // 縦軸ラベル
+          scaleLabel: {
+            display: true,
+            labelString: '体重'
+          }
+      }]
+    }
+  },
+});
+// チャート1体重ここまで
+
+// チャート2 内臓脂肪レベル
+var ctx = document.getElementById('myChart2').getContext('2d');
+var chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    // 横軸
+    labels:  ['06月29日','07月31日','08月25日','09月25日','10月28日','11月25日','01月04日','02月15日','03月12日','04月10日','05月08日'],
+    datasets: [
+      {
+        // タイトル指定
+        label: '内臓脂肪レベル',
+        lineTension: 0.1,
+        // 色周り
+        backgroundColor: 'rgba(10,100,102,0.6)',
+        borderColor: 'rgba(25,102,102,5)',
+        // 縦軸データ
+        data: [12.0,12.5,12.6,12.0,11.7,11.2,13.1,12.2,11.6,12.1,12.0],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      yAxes: [{
+          ticks: {
+            // 最小値
+            min: 11.0,
+            // 縦軸単位
+            userCallback: function(tick) {
+              return tick.toString() + '';
+            }
+          },
+          // 縦軸ラベル
+          scaleLabel: {
+            display: true,
+            labelString: '内臓脂肪レベル'
+          }
+      }]
+    }
+  },
+});
+// チャート2内臓脂肪レベルここまで
+
+// チャート3体内年齢ここから
+var ctx = document.getElementById('myChart3').getContext('2d');
+var chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    // 横軸指定
+    labels:  ['06月29日','07月31日','08月25日','09月25日','10月28日','11月25日','01月04日','02月15日','03月12日','04月10日','05月08日'],
+    datasets: [
+      {
+        // タイトル
+        label: '体内年齢',
+        lineTension: 0.1,
+        // 色周り
+        backgroundColor: 'rgba(0, 255, 255, .5)',
+        borderColor: 'rgba(75,192,192,1)',
+        // 縦軸データ
+        data: [42.,44,42,41,39,36,43,42,38,40,41],
+      
+      },
+    ],
+  },
+  options: {
+    scales: {
+      yAxes: [{
+          ticks: {
+            // 最小値
+            min: 35,
+            // 縦軸単位
+            userCallback: function(tick) {
+              return tick.toString() + '歳';
+            }
+          },
+          // 縦軸ラベル
+          scaleLabel: {
+            display: true,
+            labelString: '体内年齢'
+          }
+      }]
+    }
+  },
+});
+// チャート 3 体内年齢ここまで
+
+// レーザーチャートここから
+var ctx = document.getElementById("myRaderChart");
+    var myRadarChart = new Chart(ctx, {
+        type: 'radar', 
+        data: { 
+            labels: ["体重", "体脂肪率", "筋肉量", "内臓脂肪レベル", "基礎代謝量"],
+            datasets: [{
+                label: '自分',
+                data: [65, 70, 80, 56, 75],
+                backgroundColor: 'RGBA(225,95,150, 0.5)',
+                borderColor: 'RGBA(225,95,150, 1)',
+                borderWidth: 1,
+                pointBackgroundColor: 'RGB(46,106,177)'
+            }, {
+            label: '平均',
+            data: [70, 70, 70, 70, 70],
+            backgroundColor: 'RGBA(115,255,25, 0.5)',
+            borderColor: 'RGBA(115,255,25, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'RGB(46,106,177)'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '体力健康測定'
+            },
+            scale:{
+                ticks:{
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                    stepSize: 10,
+                    callback: function(value, index, values){
+                        return  value +  '点'
+                    }
+                }
+            }
+        }
+    });
+// レーザーチャートここまで
+
+const me =[
+{day:'06/29',weight:'76.1',average:'12.0',age:'42'},
+{day:'07/31',weight:'75.5',average:'12.5',age:'44'},
+{day:'08/25',weight:'74.8',average:'12.6',age:'42'},
+{day:'09/25',weight:'74.1',average:'12.0',age:'41'},
+{day:'10/28',weight:'72.4',average:'11.7',age:'39'},
+{day:'11/25',weight:'69.8',average:'11.2',age:'36'},
+{day:'01/04',weight:'73.1',average:'13.1',age:'43'},
+{day:'02/15',weight:'72.5',average:'12.2',age:'42'},
+{day:'03/12',weight:'70.3',average:'11.6',age:'38'},
+{day:'04/10',weight:'71.1',average:'12.1',age:'40'},
+{day:'05/08',weight:'72.6',average:'12.0',age:'41'},
+
+];
+const jsonData=JSON.stringify(me);
+localStorage.setItem('memo',jsonData);
+console.log(me);
+
+if(localStorage.getItem('memo')){
+  const jsonData = localStorage.getItem('memo');
+  console.log(jsonData);
+  const data=JSON.parse(jsonData);
+  console.log(me);
+}else{
+  alert('データがないです');
+} 
+
+  </script>
+</body>
+</html>
+
+<!-- 
+
+  
+// 2.clear 
+$('#clear').on('click',function(){
+    localStorage.removeItem('memo');
+    $('#input').val(''),
+    $('#text_area').val('');
+});
+
+// データ取得
+if(localStorage.getItem('memo')){
+  const jsonData = localStorage.getItem('memo');
+  console.log(jsonData);
+  const data=JSON.parse(jsonData);
+  console.log(data);
+  $('#input').val(data.title);
+  $('#text_area').val(data.text);
+}else{
+  alert('データがないです');
+} -->
+
+<!-- 
+<!-- // <!-- <input type="text" id="input"> -->
+<!-- //     <textarea id="text_area"></textarea>
+//     <ul>
+//       <li id="save">Save</li>
+//       <li id="clear">Clear</li>
+//     </ul> --> -->
+
+
+
+
+
